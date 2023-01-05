@@ -1,0 +1,6 @@
+.visualizator {
+    display: flex;
+    border: black solid 1px;
+    justify-content: space-between;
+    align-items: center;
+}

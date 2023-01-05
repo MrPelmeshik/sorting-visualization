@@ -1,0 +1,31 @@
+.algoritm-component {
+    position: relative;
+    flex: 2;
+}
+
+.event-table {
+    position: absolute;
+    height: 100%;
+    overflow-y: scroll;
+    font-size: 0.7em;
+}
+
+.event-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: var(--color-bg-default);
+}
+
+.event-table-header {
+    background-color: var(--color-bg-brand);
+    color: white;
+}
+
+.event-table-row:nth-child(even){
+    background-color: var(--color-bg-ghost);
+}
+
+.event-table-row:hover{
+    background-color: var(--color-bg-link);
+    color: white;
+}

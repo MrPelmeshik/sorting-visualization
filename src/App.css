@@ -1,0 +1,50 @@
+.app {
+  color: var(--color-typo-primary);
+  background-color: var(--color-bg-system);
+  transition: transform .2s ease-in-out;
+}
+
+.mrg-v-m {
+  margin: 5px 0;
+}
+
+.flex-box {
+  display: flex;
+}
+
+.menu {
+  flex: 1;
+}
+
+.details-event {
+  flex: 3
+}
+
+.block {
+  margin: 5px;
+  border-radius: 10px;
+  background-color: var(--color-bg-default);
+  border: solid 1px var(--color-bg-brand);
+  /*box-shadow: 0 0 10px 1px var(--color-bg-brand);*/
+}
+
+.header-block {
+  background-color: var(--color-bg-brand);
+  color: white;
+
+  padding: 10px;
+
+  border-radius: 10px 10px 0 0;
+
+  font-size: 1.05em;
+  font-weight: bold;
+}
+
+.header-block > p {
+  margin-right: 0.5vw;
+}
+
+.block-content {
+  padding: 10px;
+}
+
