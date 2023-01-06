@@ -1,6 +1,6 @@
 import {AlgoritmEvent} from "../AlgoritmEvent";
 import {AlgoritmEventHandler} from "../AlgoritmEventHandler";
-import {IAlgoritm} from "./IAlgoritm";
+import {IAlgoritm} from "../IAlgoritm";
 
 
 export class BobleSortAlgoritm implements IAlgoritm{

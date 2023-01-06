@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {VisualizatorComponent} from "./components/OldNativeComponent/Visualizator/VisualizatorComponent";
+import {VisualizatorComponent} from "./components/Visualizator/VisualizatorComponent";
 import {AlgoritmsComponent} from "./components/Algoritms/AlgoritmsComponent";
 import {Layout} from "@consta/uikit/Layout";
 import {presetGpnDefault, Theme} from "@consta/uikit/Theme";
@@ -8,16 +8,26 @@ import {Badge} from "@consta/uikit/Badge";
 import {DataGeneratorComponent} from "./components/DataGenerator/DataGeneratorComponent";
 import {AlgoritmEvent} from "./components/Algoritms/AlgoritmEvent";
 import {LogListComponent} from "./components/Algoritms/LogList/LogListComponent";
+import {IVisualizatorItem} from "./components/Visualizator/IVisualizatorItem";
+import {
+  VisualisatorTypesItem, visualisatorTypesItems,
+  VisualizatorMenuComponent
+} from "./components/Visualizator/Menu/VisualizatorMenuComponent";
+import {DetailComponent} from "./components/Details/DetailComponent";
 
 
 export const App = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<number[]>([]);
+  const [visualizatorItems, setVisualizatorItems] = useState<IVisualizatorItem[]>([]);
   const [events, setEvents] = useState<AlgoritmEvent[]>([]);
+  const [visualizatorType, setVisualizatorType] = useState<VisualisatorTypesItem>(visualisatorTypesItems[0]);
+  const [selectedEventId, setSelectedEventId] = useState<number>(1);
   const [detailComponent, setDetailComponent] = useState<JSX.Element>(<>Нет данных для детализации</>);
 
   useEffect(() => {
     setEvents([])
-  }, [data])
+    setVisualizatorItems([])
+  }, [data]) // При генерации новых данных будет производиться очистка событий алгоритма и визуализации
 
   return <>
     <Theme preset={presetGpnDefault}>
@@ -25,52 +35,24 @@ export const App = () => {
         <Layout>
           <Layout flex={2} direction={'column'}>
             <Layout direction={'column'} className={'block'}>
-              <div className={'header-block'}>
-                <p>Генерация данных</p>
-                {/*<Badge label="Не выполнялось" size={'xs'} status="system" />*/}
-              </div>
               <DataGeneratorComponent data={data} setData={setData} setDetailComponent={setDetailComponent} />
             </Layout>
             <Layout direction={'column'} className={'block'}>
-              <div className={'header-block'}>
-                <p>Сортировка</p>
-                {/*<Badge label="Нет данных" size={'xs'} status="system" />*/}
-              </div>
               <AlgoritmsComponent data={data} events={events} setEvents={setEvents} setDetailComponent={setDetailComponent} />
             </Layout>
             <Layout direction={'column'} className={'block'}>
-              <div className={'header-block'}>
-                <p>Визуализация</p>
-                {/*<Badge label="Нет данных" size={'xs'} status="system" />*/}
-              </div>
-              <div className={'block-content'}>
-                any content
-              </div>
+              <VisualizatorMenuComponent visualizatorType={visualizatorType} setVisualizatorType={setVisualizatorType} />
             </Layout>
           </Layout>
           <Layout flex={2} direction={'column'} className={'block'}>
-            <div className={'header-block'}>
-              <p>События сортировки</p>
-              {/*<Badge label="Нет данных" size={'xs'} status="system" />*/}
-            </div>
-            <LogListComponent events={events} />
+            <LogListComponent events={events} selectedEventId={selectedEventId} setSelectedEventId={setSelectedEventId} />
           </Layout>
           <Layout flex={6} direction={'column'} className={'block'}>
-            <div className={'header-block'}>
-              <p>Детализация</p>
-            </div>
-            <div className={'block-content'}>
-              {detailComponent}
-            </div>
+            <DetailComponent detailComponent={detailComponent} />
           </Layout>
         </Layout>
         <Layout direction={'column'} className={'block'}>
-          <div className={'header-block'}>
-            <p>Визуализация</p>
-          </div>
-          <div className={'block-content'}>
-            {/*<VisualizatorComponent visualizatorItemsData={data}/>*/}
-          </div>
+          <VisualizatorComponent events={events} selectedEventId={selectedEventId} visualizatorType={visualizatorType} visualizatorItems={visualizatorItems} setVisualizatorItems={setVisualizatorItems} />
         </Layout>
       </Layout>
     </Theme>

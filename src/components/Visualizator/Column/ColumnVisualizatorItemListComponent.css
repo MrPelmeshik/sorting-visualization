@@ -1,0 +1,4 @@
+.column-visualizator-item-list {
+    display: flex;
+    align-items: end;
+}

@@ -40,11 +40,32 @@
   font-weight: bold;
 }
 
-.header-block > p {
+.header-block > span {
   margin-right: 0.5vw;
 }
 
 .block-content {
+  padding: 10px;
+}
+
+.block-s {
+  margin: 5px;
+  border-radius: 10px;
+  background-color: var(--color-bg-secondary);
+  border: solid 1px var(--color-bg-secondary);
+}
+
+.header-block-s {
+  background-color: var(--color-bg-ghost);
+
+  padding: 10px;
+
+  border-radius: 10px 10px 0 0;
+
+  font-weight: bold;
+}
+
+.block-content-s {
   padding: 10px;
 }
 

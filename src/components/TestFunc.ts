@@ -1,5 +1,5 @@
-import {IVisualizatorItem} from "./OldNativeComponent/Visualizator/IVisualizatorItem";
-import {defaultItemColor, getShiftColor} from "./OldNativeComponent/ColorComponent/Color";
+import {IVisualizatorItem} from "./Visualizator/IVisualizatorItem";
+import {defaultItemColor, getShiftColor} from "./Color/Color";
 import {getRandomInt} from "./ServiceFunc";
 
 
@@ -15,7 +15,7 @@ const generateDefaultVisualizatorState = (n:number):IVisualizatorItem[] => {
     let curColor = defaultItemColor;
     let visualizatorItems:IVisualizatorItem[] = [];
     for (let i = 1; i < n+1; i++) {
-        curColor = getShiftColor(curColor, n);
+        curColor = getShiftColor(n, curColor);
 
         visualizatorItems.push({
             id: i,

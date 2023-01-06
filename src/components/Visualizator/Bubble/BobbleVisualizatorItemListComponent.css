@@ -1,6 +1,6 @@
-.visualizator {
+.bobble-visualizator-item-list {
     display: flex;
-    border: black solid 1px;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }

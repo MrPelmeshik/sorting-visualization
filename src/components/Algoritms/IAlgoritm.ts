@@ -1,4 +1,4 @@
-import {AlgoritmEvent} from "../AlgoritmEvent";
+import {AlgoritmEvent} from "./AlgoritmEvent";
 
 export interface IAlgoritm {
     getName(): string

@@ -1,4 +1,4 @@
-import {IRgbColor} from "../ColorComponent/IRgbColor";
+import {IRgbColor} from "../Color/IRgbColor";
 
 export interface IVisualizatorItem {
     id: number
