@@ -1,48 +1,63 @@
-import React, {Dispatch, useEffect} from "react";
+import React, {Dispatch} from "react";
 import {AlgoritmEvent} from "../AlgoritmEvent";
-import {EventType} from "../EventType";
 import {AlgoritmEventHandler} from "../AlgoritmEventHandler";
-import {Table, TableColumn} from "@consta/uikit/Table";
+import {EventMoveIdsType} from "./EventMoveIdsType";
+import {EventType} from "../EventType";
+import {Badge} from "@consta/uikit/Badge";
 
+
+const getDetailForEvent = (event:AlgoritmEvent):JSX.Element => {
+    return <>
+        <div className={'block-s'}>
+            <div className={'header-block-s'}>Событие алгоритма №{event.id} (id:{event.id}):</div>
+            <div className={'block-content-s'}>
+                <div>{AlgoritmEventHandler.getEventDataString(event)}</div>
+            </div>
+        </div>
+    </>
+}
 
 export const LogListComponent:React.FC<{
     events:AlgoritmEvent[],
-    selectedEventId:number,
-    setSelectedEventId:Dispatch<any>
-}> = ({events, selectedEventId, setSelectedEventId}) => {
+    eventMoveIds:EventMoveIdsType,
+    setEventMoveIds:Dispatch<any>,
+    setDetailComponent:Dispatch<any>
+}> = ({events, eventMoveIds, setEventMoveIds, setDetailComponent}) => {
 
     // region Список событий алгоритма выполнения сортировки
     const eventsTable = []
     eventsTable.push(
         <div key={-1} className={'event-table-row event-table-header'}>
+            <span>id</span>
             <span>Событие</span>
-            <span>Время выполения</span>
-            <span>Значение сибытия</span>
         </div>
     );
 
     if(events) {
-        const firstDate = events[1]?.date; // Берем дату кроме INIT
-        let prevDate = firstDate;
         eventsTable.push(events.map(event => {
-            const selectedItemStyle = selectedEventId === event.id
-                ? {
-                    backgroundColor: 'var(--color-bg-link)',
-                    color: 'white'
-                }
-                : {}
+            if(event.eventType === EventType.START
+            || event.eventType === EventType.FINISH
+            || event.eventType === EventType.SWAP) {
+                const selectedItemStyle = eventMoveIds.selectedEventId === event.id
+                    ? {
+                        backgroundColor: 'var(--color-bg-link)',
+                        color: 'white'
+                    }
+                    : {}
 
-            const el = <div key={event.id}
-                            className={'event-table-row'}
-                            style={selectedItemStyle}
-                            onClick={() => setSelectedEventId(event.id)}
-            >
-                <span>{EventType[event.eventType]}</span>
-                <span>{Math.abs(event.date.getTime() - firstDate.getTime()) / 1000}ms (+{Math.abs(event.date.getTime() - prevDate.getTime()) / 1000}ms)</span>
-                <span>{AlgoritmEventHandler.getValueString(event)}</span>
-            </div>
-            prevDate = event.date;
-            return el;
+                const el = <div key={event.id}
+                                className={'event-table-row'}
+                                style={selectedItemStyle}
+                                onClick={() => {
+                                    setEventMoveIds({selectedEventId: event.id, prevEventId: eventMoveIds.selectedEventId})
+                                    setDetailComponent(getDetailForEvent(event))
+                                }}
+                >
+                    <span>{event.id}</span>
+                    <span>{AlgoritmEventHandler.getEventDataString(event)}</span>
+                </div>
+                return el;
+            }
         }));
     }
     // endregion

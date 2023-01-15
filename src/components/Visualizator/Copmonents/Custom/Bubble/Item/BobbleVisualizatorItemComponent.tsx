@@ -1,12 +1,12 @@
-import {defaultItemColor, getColorRgbStyle} from "../../../Color/Color";
+import {defaultItemColor, getColorRgbStyle} from "../../../../../Color/Color";
 import {Tooltip} from "@consta/uikit/Tooltip";
 import React, {useState} from "react";
 import {Position} from "@consta/uikit/Popover";
-import {IVisualizatorItem} from "../../IVisualizatorItem";
-import './ColumnVisualizatorItemComponent.css'
+import {IVisualizatorItem} from "../../../../IVisualizatorItem";
+import './BobbleVisualizatorItemComponent.css'
 
 
-export const ColumnVisualizatorItemComponent:React.FC<{item:IVisualizatorItem}> = ({item}) => {
+export const BobbleVisualizatorItemComponent:React.FC<{item:IVisualizatorItem}> = ({item}) => {
     const [position, setPosition] = useState<Position>(undefined);
 
     const handleMouseMove = (event: React.MouseEvent) => {
@@ -14,16 +14,16 @@ export const ColumnVisualizatorItemComponent:React.FC<{item:IVisualizatorItem}> 
     };
 
     const style = {
-        width:`calc(100%)`,
+        width:`calc(2em * ${item.scale ?? 1})`,
         height:`calc(2em * ${item.scale ?? 1})`,
         backgroundColor:getColorRgbStyle(item.color ?? defaultItemColor),
         boxShadow: item.validPosition.includes(item.curPosition)
-            ? 'inset 0 0 10px chartreuse, inset 0 0 20px lawngreen'
+            ? '0 0 10px chartreuse, 0 0 20px lawngreen'
             : ''
     }
 
     return <>
-        <div className={'column-visualizator-item'}
+        <div className={'bobble-visualizator-item'}
              style={style}
              onMouseMove={handleMouseMove}
              onMouseLeave={() => setPosition(undefined)}

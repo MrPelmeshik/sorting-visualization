@@ -8,7 +8,7 @@ export const DataGeneratorComponent:React.FC<{
     setData:Dispatch<any>,
     setDetailComponent:Dispatch<any>
 }> = ({data, setData, setDetailComponent}) => {
-    const [countData, setCountData] = useState<number>(20)
+    const [countData, setCountData] = useState<number>(10)
 
     const getValue = (value: number | [number, number]):number => {
         if(typeof value === 'number')
@@ -22,19 +22,19 @@ export const DataGeneratorComponent:React.FC<{
 
     return <>
         <div className={'header-block'}>
-            <span>Генерация данных</span>
+            <span>Управление генерацией данных</span>
             {/*<Badge label="Не выполнялось" size={'xs'} status="system" />*/}
         </div>
         <div className={'block-content'}>
             <Slider label={`Количество значений:`}
-                    className={'mrg-v-m'}
+                    className={'mrg-m'}
                     size={'s'}
                     leftSide={'input'}
                     onChange={({ value }) => setCountData(getValue(value))}
                     value={countData}
             />
             <Button label={`Сгенерировать данные`}
-                    className={'mrg-v-m'}
+                    className={'mrg-m'}
                     onClick={() => {
                         const localData = getRandomData(countData)
                         setData(localData)
@@ -51,7 +51,7 @@ export const DataGeneratorComponent:React.FC<{
                     size={'xs'}
             />
             <Button label={`Показать данные`}
-                    className={'mrg-v-m'}
+                    className={'mrg-m'}
                     onClick={() => {
                         setDetailComponent(
                             <>

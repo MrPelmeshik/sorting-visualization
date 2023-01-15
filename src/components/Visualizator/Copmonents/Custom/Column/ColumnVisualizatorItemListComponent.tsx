@@ -1,7 +1,7 @@
 import "./ColumnVisualizatorItemListComponent.css"
 import React, {useState} from "react";
-import {defaultItemColor, getColorRgbStyle} from "../../Color/Color";
-import {IVisualizatorItem} from "../IVisualizatorItem";
+import {defaultItemColor, getColorRgbStyle} from "../../../../Color/Color";
+import {IVisualizatorItem} from "../../../IVisualizatorItem";
 import {Tooltip} from "@consta/uikit/Tooltip";
 import {Position} from "@consta/uikit/Popover";
 import {ColumnVisualizatorItemComponent} from "./Item/ColumnVisualizatorItemComponent";

@@ -18,7 +18,6 @@ export class BobleSortAlgoritm implements IAlgoritm{
     }
 
     public do(): AlgoritmEvent[] {
-        console.log('do data', this.data)
         this.eventHandler.start(this.data.slice());
 
         for (let i = 0; i < this.data.length; i++) {

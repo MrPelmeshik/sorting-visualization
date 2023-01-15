@@ -9,24 +9,25 @@ import {DataGeneratorComponent} from "./components/DataGenerator/DataGeneratorCo
 import {AlgoritmEvent} from "./components/Algoritms/AlgoritmEvent";
 import {LogListComponent} from "./components/Algoritms/LogList/LogListComponent";
 import {IVisualizatorItem} from "./components/Visualizator/IVisualizatorItem";
-import {
-  VisualisatorTypesItem, visualisatorTypesItems,
-  VisualizatorMenuComponent
-} from "./components/Visualizator/Menu/VisualizatorMenuComponent";
+import {VisualizatorMenuComponent} from "./components/Visualizator/Menu/VisualizatorMenuComponent";
 import {DetailComponent} from "./components/Details/DetailComponent";
+import {EventMoveIdsType} from "./components/Algoritms/LogList/EventMoveIdsType";
+import {VisualisatorTypesItem} from "./components/Visualizator/Menu/Item/VisualisatorTypesItem";
+import {visualisatorTypesItems} from "./components/Visualizator/Menu/Item/VisualisatorTypesItems";
 
 
 export const App = () => {
   const [data, setData] = useState<number[]>([]);
   const [visualizatorItems, setVisualizatorItems] = useState<IVisualizatorItem[]>([]);
   const [events, setEvents] = useState<AlgoritmEvent[]>([]);
-  const [visualizatorType, setVisualizatorType] = useState<VisualisatorTypesItem>(visualisatorTypesItems[0]);
-  const [selectedEventId, setSelectedEventId] = useState<number>(1);
+  const [visualizatorType, setVisualizatorType] = useState<VisualisatorTypesItem>(visualisatorTypesItems[1]);
+  const [eventMoveIds, setEventMoveIds] = useState<EventMoveIdsType>({selectedEventId:-1, prevEventId:null});
   const [detailComponent, setDetailComponent] = useState<JSX.Element>(<>Нет данных для детализации</>);
 
   useEffect(() => {
     setEvents([])
     setVisualizatorItems([])
+    setEventMoveIds({selectedEventId:-1, prevEventId:null})
   }, [data]) // При генерации новых данных будет производиться очистка событий алгоритма и визуализации
 
   return <>
@@ -45,14 +46,14 @@ export const App = () => {
             </Layout>
           </Layout>
           <Layout flex={2} direction={'column'} className={'block'}>
-            <LogListComponent events={events} selectedEventId={selectedEventId} setSelectedEventId={setSelectedEventId} />
+            <LogListComponent events={events} eventMoveIds={eventMoveIds} setEventMoveIds={setEventMoveIds} setDetailComponent={setDetailComponent} />
           </Layout>
           <Layout flex={6} direction={'column'} className={'block'}>
             <DetailComponent detailComponent={detailComponent} />
           </Layout>
         </Layout>
         <Layout direction={'column'} className={'block'}>
-          <VisualizatorComponent events={events} selectedEventId={selectedEventId} visualizatorType={visualizatorType} visualizatorItems={visualizatorItems} setVisualizatorItems={setVisualizatorItems} />
+          <VisualizatorComponent events={events} eventMoveIds={eventMoveIds} setEventMoveIds={setEventMoveIds} visualizatorType={visualizatorType} visualizatorItems={visualizatorItems} setVisualizatorItems={setVisualizatorItems} />
         </Layout>
       </Layout>
     </Theme>

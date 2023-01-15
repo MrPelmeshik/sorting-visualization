@@ -5,6 +5,7 @@ export interface IVisualizatorItem {
     value: number
     curPosition: number
     validPosition: number[]
+    isSelected: boolean
     scale?: number
     color?: IRgbColor
 }

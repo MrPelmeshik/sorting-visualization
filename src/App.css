@@ -4,8 +4,16 @@
   transition: transform .2s ease-in-out;
 }
 
+.mrg-m {
+  margin: 5px;
+}
+
 .mrg-v-m {
   margin: 5px 0;
+}
+
+.mrg-h-m {
+  margin: 0 5px;
 }
 
 .flex-box {

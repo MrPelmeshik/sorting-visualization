@@ -21,6 +21,65 @@ export class AlgoritmEventHandler {
         return this.events;
     }
 
+    // region static handler
+    public static getFirstEvent(events: AlgoritmEvent[]): AlgoritmEvent {
+        return events[1]
+    }
+
+    public static getDateForFirstEvent(events: AlgoritmEvent[]): Date {
+        return events[1].date
+    }
+
+    public static getDateByEventId(id:number, events: AlgoritmEvent[]): Date | undefined {
+        return events.find(event => event.id === id)?.date
+    }
+
+    public static getExecutionTime(event: AlgoritmEvent, events: AlgoritmEvent[]): string {
+        const firstDate = this.getDateForFirstEvent(events);
+        const prevDate = event.id !== this.getFirstEvent(events)?.id
+            ? firstDate
+            : event.date;
+        return `${Math.abs(event.date.getTime() - firstDate.getTime()) / 1000}ms (+${Math.abs(event.date.getTime() - prevDate.getTime()) / 1000}ms)`
+    }
+
+    public static getEventDataString(event: AlgoritmEvent): string {
+        return `${this.getTypeString(event)} ${this.getValueString(event)}`
+    }
+
+    public static getTypeString(event: AlgoritmEvent): string {
+        let strType
+        switch (event.eventType) {
+            case EventType.INIT:
+                strType = 'Инициализация'
+                break;
+            case EventType.START:
+                strType = 'Запуск сортировки'
+                break;
+            case EventType.FINISH:
+                strType = 'Завершение сортировки'
+                break;
+            case EventType.CHECK:
+                strType = 'Сверка значений'
+                break;
+            case EventType.SWAP:
+                strType = 'Смена значений'
+                break;
+            case EventType.CREATE_POINTER:
+                strType = 'Создание указателя'
+                break;
+            case EventType.SHIFT_POINTER:
+                strType = 'Перемещение указателя'
+                break;
+            case EventType.DELETE_POINTER:
+                strType = 'Удаление указателя'
+                break;
+            default:
+                strType = `${EventType[event.eventType]} (Неизвестное событие)`
+        }
+
+        return strType
+    }
+
     public static getValueString(event: AlgoritmEvent): string {
         if(typeof(event.value) === 'string')
             return event.value
@@ -67,6 +126,36 @@ export class AlgoritmEventHandler {
         return sortedData
     }
 
+    public static getIndexesForSwap(event: AlgoritmEvent): number[] {
+        if(event.value
+            && event.value.hasOwnProperty('index1')
+            && event.value.hasOwnProperty('index2'))
+            return [event.value['index1' as keyof typeof event.value], event.value['index2' as keyof typeof event.value]]
+
+        console.warn(`Невозможно обменять элементы (event.id: ${event.id})`)
+        return [-1, -1]
+    }
+
+    public static getIndexesInEvent(event: AlgoritmEvent): number[] {
+        let indexForEvent: number[] = []
+        if(event.value
+            && event.value.hasOwnProperty('index1')
+            && event.value.hasOwnProperty('index2'))
+            indexForEvent.push(
+                event.value['index1' as keyof typeof event.value],
+                event.value['index2' as keyof typeof event.value]
+            )
+
+        if(event.value
+            && event.value.hasOwnProperty('pointerName')
+            && event.value.hasOwnProperty('positionIndex'))
+            indexForEvent.push(event.value['positionIndex' as keyof typeof event.value])
+
+        return indexForEvent;
+    }
+    // endregion
+
+    // region add events
     public swap(index1:number, index2:number) {
         this.events.push({
             id: this.events.length,
@@ -112,7 +201,6 @@ export class AlgoritmEventHandler {
         });
     }
 
-
     public createPointer(pointerName:string, positionIndex:number) {
         this.events.push({
             id: this.events.length,
@@ -147,4 +235,5 @@ export class AlgoritmEventHandler {
     public createNewArray() {
         throw new Error(`Метод setCreateNewArray не реализован!`);
     }
+    // endregion
 }

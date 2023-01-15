@@ -22,6 +22,7 @@ const generateDefaultVisualizatorState = (n:number):IVisualizatorItem[] => {
             value: i,
             curPosition: i - 1,
             validPosition: [i - 1],
+            isSelected: false,
             scale: 1 + (1/n)*i,
             color: curColor
         });
